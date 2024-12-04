@@ -377,7 +377,11 @@ class ToshibaAcFcuState:
             changed = True
 
         if "oTemp" in hb_data and hb_data["oTemp"] != self._ac_outdoor_temperature:
-            self._ac_outdoor_temperature = hb_data["oTemp"]
+            if hb_data["oTemp"] > 127:
+                self._ac_outdoor_temperature = hb_data["oTemp"] - 256
+            else:
+                self._ac_outdoor_temperature = hb_data["oTemp"]
+
             changed = True
 
         return changed
